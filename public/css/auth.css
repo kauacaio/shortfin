@@ -1,0 +1,202 @@
+/* Importa uma fonte moderna */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Paleta de cores moderna */
+    --color-background: #fcfcfc;
+    --color-card-background: #ffffff;
+    --color-primary: #007aff;
+    --color-text-dark: #1d1d1f;
+    --color-text-light: #6e6e73;
+    --color-border: #e8e8ed;
+    --color-hover: #0060df;
+}
+
+/* Animação para um efeito de fade-in e subida */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.auth-container {
+    display: flex;
+    width: 100%;
+    max-width: 960px;
+    background-color: var(--color-card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* Marketing com efeito de transição para as frases */
+.marketing-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+    background: linear-gradient(135deg, var(--color-primary), #005bb5);
+    color: #fff;
+    text-align: center;
+}
+
+.marketing-content {
+    animation: fade-in-up 0.8s ease-out;
+}
+
+.marketing-section h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.05em;
+    margin-bottom: 15px;
+}
+
+.marketing-section p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.form-section {
+    flex: 1.2; /* Aumenta a proporção para deixar o formulário maior */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px; /* Aumenta o padding para mais espaço */
+}
+
+.form-section h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-text-dark);
+}
+
+.form-section .form-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-bottom: 24px;
+}
+
+.form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-section input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    transition: border-color 0.3s;
+}
+
+.form-section input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+.form-section button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-section button:hover {
+    background-color: var(--color-hover);
+}
+
+.form-section #message {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-section a {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.form-section a:hover {
+    color: var(--color-hover);
+}
+
+.final-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fade-in-up 0.8s ease-out;
+}
+
+.final-message h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.final-message p {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.final-message .symbol {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+        max-width: 450px;
+        min-height: auto;
+    }
+    .marketing-section {
+        display: none;
+    }
+    .form-section {
+        padding: 30px;
+    }
+}

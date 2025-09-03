@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortFIN - Painel</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="logo">ShortFIN</div>
+            <nav class="user-nav">
+                <span id="user-email">...</span>
+                <button id="logout-button" class="logout-btn">Sair</button>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1>Visão Geral</h1>
+                <p class="subtitle">Aqui está o seu resumo financeiro em um piscar de olhos.</p>
+            </div>
+            
+            <section class="summary-cards">
+                <div class="card balance-card">
+                    <h3>Saldo Total</h3>
+                    <p id="total-balance">R$ 0,00</p>
+                </div>
+                <div class="card income-card">
+                    <h3>Receitas</h3>
+                    <p id="total-income">R$ 0,00</p>
+                </div>
+                <div class="card expense-card">
+                    <h3>Despesas</h3>
+                    <p id="total-expense">R$ 0,00</p>
+                </div>
+            </section>
+            
+            <section class="main-sections">
+                <div class="chart-section section">
+                    <div class="section-header">
+                        <h2>Distribuição de Despesas</h2>
+                    </div>
+                    <canvas id="expenseChart"></canvas>
+                </div>
+                
+                <div class="transactions-section section">
+                    <div class="section-header">
+                        <h2>Transações Recentes</h2>
+                        <button id="show-add-transaction-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="transactions-list" class="list-container"></ul>
+                </div>
+                
+                <div class="budgets-section section">
+                    <div class="section-header">
+                        <h2>Orçamentos</h2>
+                        <button id="show-add-budget-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="budgets-list" class="list-container"></ul>
+                </div>
+                
+                <div class="fixed-entries-section section">
+                    <div class="section-header">
+                        <h2>Receitas e Despesas Fixas</h2>
+                        <button id="show-add-fixed-entry-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="fixed-entries-list" class="list-container"></ul>
+                </div>
+                
+                <div class="family-members-section section">
+                    <div class="section-header">
+                        <h2>Membros da Família</h2>
+                        <button id="show-add-family-member-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="family-members-list" class="list-container"></ul>
+                </div>
+
+                 <div class="bills-section section">
+                    <div class="section-header">
+                        <h2>Contas a Pagar e Receber</h2>
+                        <button id="show-add-bill-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="bills-list" class="list-container"></ul>
+                </div>
+
+                <div class="savings-boxes-section section">
+                    <div class="section-header">
+                        <h2>Caixinhas de Poupança</h2>
+                        <button id="show-add-savings-box-form-button" class="add-btn">+</button>
+                    </div>
+                    <ul id="savings-boxes-list" class="list-container"></ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="budget-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Criar Novo Orçamento</h2>
+            <form id="add-budget-form">
+                <input type="text" id="budget-name" placeholder="Nome do Orçamento (Ex: Lazer)" required>
+                <input type="number" id="budget-amount" placeholder="Valor (Ex: 500.00)" step="0.01" required>
+                <input type="text" id="budget-category" placeholder="Categoria (Ex: Lazer)" required>
+                <button type="submit">Adicionar Orçamento</button>
+                <button type="button" id="cancel-budget-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="transaction-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Adicionar Transação</h2>
+            <form id="add-transaction-form">
+                <input type="text" id="transaction-description" placeholder="Descrição (Ex: Pizza na noite de sábado)" required>
+                <input type="number" id="transaction-amount" placeholder="Valor (Ex: 50.00)" step="0.01" required>
+                <select id="transaction-type" required>
+                    <option value="" disabled selected>Tipo de Transação</option>
+                    <option value="expense">Despesa</option>
+                    <option value="income">Receita</option>
+                </select>
+                <input type="text" id="transaction-category" placeholder="Categoria (Ex: Alimentação)" required>
+                <select id="transaction-member-id" required>
+                    <option value="" disabled selected>Quem gastou?</option>
+                </select>
+                <button type="submit">Adicionar Transação</button>
+                <button type="button" id="cancel-transaction-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="fixed-entry-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Adicionar Lançamento Fixo</h2>
+            <form id="add-fixed-entry-form">
+                <input type="text" id="fixed-entry-description" placeholder="Descrição (Ex: Salário)" required>
+                <input type="number" id="fixed-entry-amount" placeholder="Valor (Ex: 2500.00)" step="0.01" required>
+                <select id="fixed-entry-type" required>
+                    <option value="" disabled selected>Tipo de Transação</option>
+                    <option value="expense">Despesa</option>
+                    <option value="income">Receita</option>
+                </select>
+                <input type="text" id="fixed-entry-category" placeholder="Categoria (Ex: Salário)" required>
+                <input type="text" id="fixed-entry-frequency" placeholder="Frequência (Ex: monthly)" required>
+                <label for="fixed-entry-start-date">Data de Início:</label>
+                <input type="date" id="fixed-entry-start-date" required>
+                <button type="submit">Adicionar Lançamento</button>
+                <button type="button" id="cancel-fixed-entry-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="family-member-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Adicionar Membro da Família</h2>
+            <form id="add-family-member-form">
+                <input type="text" id="family-member-name" placeholder="Nome (Ex: João)" required>
+                <input type="text" id="family-member-relation" placeholder="Relação (Ex: Filho)" required>
+                <button type="submit">Adicionar Membro</button>
+                <button type="button" id="cancel-family-member-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="bill-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Adicionar Nova Conta</h2>
+            <form id="add-bill-form">
+                <input type="text" id="bill-description" placeholder="Descrição (Ex: Aluguel)" required>
+                <input type="number" id="bill-amount" placeholder="Valor (Ex: 1200.00)" step="0.01" required>
+                <label for="bill-due-date">Data de Vencimento:</label>
+                <input type="date" id="bill-due-date" required>
+                <select id="bill-type" required>
+                    <option value="" disabled selected>Tipo</option>
+                    <option value="payable">A Pagar</option>
+                    <option value="receivable">A Receber</option>
+                </select>
+                <button type="submit">Salvar Conta</button>
+                <button type="button" id="cancel-bill-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="savings-box-form-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Criar Nova Caixinha</h2>
+            <form id="add-savings-box-form">
+                <input type="text" id="savings-box-name" placeholder="Nome da Caixinha (Ex: Viagem de Férias)" required>
+                <input type="number" id="savings-box-target-amount" placeholder="Valor da Meta (Ex: 5000.00)" step="0.01" required>
+                <button type="submit">Criar Caixinha</button>
+                <button type="button" id="cancel-savings-box-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <div id="transfer-modal-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2 id="transfer-modal-title">Transferir para a Caixinha</h2>
+            <form id="transfer-form">
+                <input type="number" id="transfer-amount" placeholder="Valor a transferir" step="0.01" required>
+                <button type="submit">Confirmar Transferência</button>
+                <button type="button" id="cancel-transfer-button">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

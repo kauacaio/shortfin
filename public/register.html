@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortFIN - Cadastro</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="marketing-section">
+            <h2 id="marketing-title">Crie uma nova história financeira.</h2>
+            <p id="marketing-text">A ferramenta que sua família precisa para um futuro seguro e próspero.</p>
+        </div>
+        <div class="form-section">
+            <h1>Criar Conta</h1>
+            <p class="form-subtitle">Junte-se ao ShortFIN em apenas alguns passos.</p>
+            <form id="register-form">
+                <input type="email" id="email" placeholder="E-mail" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <p id="message"></p>
+            <a href="index.html">Já tem uma conta? Voltar para o login.</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>
