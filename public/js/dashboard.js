@@ -55,7 +55,15 @@ const cancelTransferButton = document.getElementById('cancel-transfer-button');
 const transferModalTitle = document.getElementById('transfer-modal-title');
 let currentTransferBoxId = null;
 
-// FUNÇÕES DE TRATAMENTO DE FORMULÁRIOS E AÇÕES (DECLARADAS ANTES DE SEREM USADAS)
+const showGenerateAccessCodeButton = document.getElementById('show-generate-access-code-button');
+const accessCodeModalContainer = document.getElementById('access-code-modal-container');
+const generateAccessCodeForm = document.getElementById('generate-access-code-form');
+const memberSelect = document.getElementById('member-select');
+const generatedCodeMessage = document.getElementById('generated-code-message');
+const cancelAccessCodeButton = document.getElementById('cancel-access-code-button');
+
+// FUNÇÕES DE TRATAMENTO DE FORMULÁRIOS E AÇÕES
+// ----------------------------------------------------
 async function handleAddBudget(event) {
     event.preventDefault();
     const { data: { session } } = await supabase.auth.getSession();
@@ -250,7 +258,40 @@ async function handleDeleteSavingsBox(event) {
     }
 }
 
-// FUNÇÕES DE BUSCA E RENDERIZAÇÃO
+async function populateMemberSelectForAccessCode() {
+    const { data: familyMembers, error } = await supabase.from('family_members').select('*');
+    if (error) { console.error('Erro ao buscar membros para o seletor:', error.message); return; }
+    
+    memberSelect.innerHTML = `<option value="" disabled selected>Selecionar Membro</option>`;
+    familyMembers.forEach(member => {
+        const option = document.createElement('option');
+        option.value = member.id;
+        option.textContent = member.name;
+        memberSelect.appendChild(option);
+    });
+}
+
+async function handleGenerateAccessCode(event) {
+    event.preventDefault();
+    const memberId = memberSelect.value;
+    if (!memberId) {
+        generatedCodeMessage.textContent = 'Por favor, selecione um membro.';
+        return;
+    }
+
+    const newCode = Math.floor(1000 + Math.random() * 9000); // Gera um código de 4 dígitos
+
+    const { error } = await supabase.from('member_access').insert([{ member_id: memberId, access_code: newCode }]);
+
+    if (error) {
+        generatedCodeMessage.textContent = 'Erro ao gerar código.';
+        console.error(error);
+    } else {
+        generatedCodeMessage.textContent = `Código gerado: ${newCode}`;
+    }
+}
+
+// FUNÇÕES DE BUSCA E RENDERIZAÇÃO (SEÇÃO PRINCIPAL)
 async function fetchAndRenderBudgets() {
     const { data: budgets, error } = await supabase.from('budgets').select('*').order('created_at', { ascending: false });
     if (error) { console.error('Erro ao buscar orçamentos:', error.message); budgetsList.innerHTML = '<li>Erro ao carregar os orçamentos.</li>'; return; }
@@ -312,7 +353,7 @@ async function fetchAndRenderBills() {
         return `<li class="${bill.is_paid ? 'paid' : (isOverdue ? 'overdue' : '')}"><div class="bill-info"><span class="description">${bill.description}</span><span class="details">Vencimento: ${new Date(bill.due_date).toLocaleDateString()}</span></div><div class="bill-amount">${bill.type === 'payable' ? '-' : '+'}$${bill.amount.toFixed(2)}</div><div class="bill-actions">${!bill.is_paid ? `<button class="pay-btn" data-id="${bill.id}">Pagar</button>` : '<span>Pago</span>'}</div></li>`;
     }).join('');
     billsList.innerHTML = billsHtml || '<li>Nenhuma conta encontrada.</li>';
-    document.querySelectorAll('.pay-btn').forEach(btn => btn.addEventListener('click', handleToggleBillPaid));
+    document.querySelectorAll('#bills-list .pay-btn').forEach(btn => btn.addEventListener('click', handleToggleBillPaid));
 }
 
 async function fetchAndRenderSavingsBoxes() {
@@ -417,6 +458,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         transferModalContainer.style.display = 'none';
         transferForm.reset();
     });
+
+    showGenerateAccessCodeButton.addEventListener('click', () => { populateMemberSelectForAccessCode(); accessCodeModalContainer.style.display = 'flex'; });
+    cancelAccessCodeButton.addEventListener('click', () => { accessCodeModalContainer.style.display = 'none'; generatedCodeMessage.textContent = ''; });
+    generateAccessCodeForm.addEventListener('submit', handleGenerateAccessCode);
 
     logoutButton.addEventListener('click', async () => { await supabase.auth.signOut(); window.location.href = '/index.html'; });
 });

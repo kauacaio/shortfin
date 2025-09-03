@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortFIN - Acesso do Membro</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="marketing-section">
+            <h2>Bem-vindo à área da família.</h2>
+            <p>Faça seu login para gerenciar suas finanças de forma simples e segura.</p>
+        </div>
+        <div class="form-section">
+            <h1>Acesso do Membro</h1>
+            <p class="form-subtitle">Insira seu nome e o código de acesso fornecido.</p>
+            <form id="member-login-form">
+                <input type="text" id="member-name" placeholder="Seu Nome" required>
+                <input type="password" id="member-access-code" placeholder="Código de Acesso" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <p id="message"></p>
+            <a href="index.html">Voltar para a página principal.</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/member-login.js"></script>
+</body>
+</html>

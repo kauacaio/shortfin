@@ -73,6 +73,7 @@
                     <div class="section-header">
                         <h2>Membros da Família</h2>
                         <button id="show-add-family-member-form-button" class="add-btn">+</button>
+                        <button id="show-generate-access-code-button" class="add-btn">🔑</button>
                     </div>
                     <ul id="family-members-list" class="list-container"></ul>
                 </div>
@@ -198,6 +199,19 @@
             </form>
         </div>
     </div>
+    <div id="access-code-modal-container" class="form-overlay" style="display: none;">
+        <div class="form-card">
+            <h2>Gerar Código de Acesso</h2>
+            <form id="generate-access-code-form">
+                <label for="member-select">Selecionar Membro:</label>
+                <select id="member-select" required></select>
+                <button type="submit">Gerar Código</button>
+                <button type="button" id="cancel-access-code-button">Cancelar</button>
+            </form>
+            <p id="generated-code-message" style="margin-top: 20px; text-align: center; font-weight: bold;"></p>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/dashboard.js"></script>
