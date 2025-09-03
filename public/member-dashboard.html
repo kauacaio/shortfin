@@ -18,44 +18,41 @@
 
         <main class="main-content">
             <div class="content-header">
-                <h1>Meu Painel</h1>
-                <p class="subtitle">Aqui está o seu resumo de gastos.</p>
+                <h1 id="main-title">Meu Painel</h1>
+                <p class="subtitle" id="main-subtitle">Aqui está o seu resumo de gastos e insights da família.</p>
             </div>
             
+            <section class="summary-cards">
+                <div class="card family-status-card">
+                    <h3 id="family-status-title">Status da Família</h3>
+                    <p id="family-status-message">Carregando...</p>
+                </div>
+            </section>
+            
             <section class="main-sections">
+                <div class="transactions-section section">
+                    <div class="section-header">
+                        <h2>Adicionar Minha Transação</h2>
+                        <button id="show-add-transaction-form-button" class="add-btn">+</button>
+                    </div>
+                    <form id="add-transaction-form" style="display: none;">
+                        <input type="text" id="transaction-description" placeholder="Descrição" required>
+                        <input type="number" id="transaction-amount" placeholder="Valor" step="0.01" required>
+                        <input type="text" id="transaction-category" placeholder="Categoria" required>
+                        <button type="submit">Adicionar Transação</button>
+                        <button type="button" id="cancel-transaction-button">Cancelar</button>
+                    </form>
+                    <ul id="member-transactions-list" class="list-container"></ul>
+                </div>
+                
                 <div class="chart-section section">
                     <div class="section-header">
                         <h2>Minhas Despesas por Categoria</h2>
                     </div>
                     <canvas id="memberExpenseChart"></canvas>
                 </div>
-                
-                <div class="transactions-section section">
-                    <div class="section-header">
-                        <h2>Minhas Transações Recentes</h2>
-                        <button id="show-add-transaction-form-button" class="add-btn">+</button>
-                    </div>
-                    <ul id="member-transactions-list" class="list-container"></ul>
-                </div>
             </section>
         </main>
-    </div>
-
-    <div id="transaction-form-container" class="form-overlay" style="display: none;">
-        <div class="form-card">
-            <h2>Adicionar Minha Transação</h2>
-            <form id="add-transaction-form">
-                <input type="text" id="transaction-description" placeholder="Descrição" required>
-                <input type="number" id="transaction-amount" placeholder="Valor" step="0.01" required>
-                <select id="transaction-type" required>
-                    <option value="" disabled selected>Tipo de Transação</option>
-                    <option value="expense">Despesa</option>
-                </select>
-                <input type="text" id="transaction-category" placeholder="Categoria" required>
-                <button type="submit">Adicionar Transação</button>
-                <button type="button" id="cancel-transaction-button">Cancelar</button>
-            </form>ar 
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

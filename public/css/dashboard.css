@@ -442,3 +442,40 @@ body {
     background-color: #d9534f;
     color: #fff;
 }
+
+/* Estilos do formulário de transação do membro */
+#add-transaction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+#add-transaction-form input,
+#add-transaction-form select {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+}
+
+#add-transaction-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#add-transaction-form button[type="submit"] {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+#add-transaction-form button[type="button"] {
+    background-color: #e0e0e0;
+    color: var(--color-text-dark);
+}
